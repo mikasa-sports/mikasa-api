@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Confirm Your Email</title>
+  <style>
+    .wrapper {
+      font-family: "Roboto",'Helvetica Neue', Helvetica, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 30px;
+      color: #333333;
+    }
+
+    header {
+      text-align: center;
+      width: 300px;
+      margin: 0 auto;
+      height: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header img {
+      width: 150px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      margin: 0 auto;
+
+    }
+
+    .email-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .email-header img {
+      max-width: 100%;
+      height: auto;
+    }
+    .email-body {
+      padding: 20px;
+      text-align: center;
+    }
+    .email-body h2 {
+      font-size: 24px;
+      margin: 0 0 20px;
+      color: #474745;
+    }
+    .email-body a {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      color: #ffffff;
+      background-color: #474745;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .email-footer {
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
+      color: #aaaaaa;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="email-wrapper">
+    <header>
+      <img src="https://globbing.com/file_manager/email/globbing.png" alt="mikasa">
+    </header>
+    <div class="email-body">
+      <h2>Dear <span th:text="${firstname}"></span></h2>
+      <p>Click below to verify your email and proceed to the confirmation page.</p>
+      <a th:href="${confirmationUrl}">Confirm Your Verification</a>
+    </div>
+    <div class="email-footer">
+      <p>If you didn’t request this email, you can safely ignore it.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

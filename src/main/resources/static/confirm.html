@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Confirm Your Account</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body */
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(to right, #eceff1, #ffffff);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #333;
+    }
+
+    /* Confirmation Wrapper */
+    .confirm-wrapper {
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    /* Header */
+    .confirm-wrapper header img {
+      width: 120px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    /* Content */
+    .confirm-wrapper h1 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #474745;
+    }
+
+    .confirm-wrapper p {
+      font-size: 16px;
+      margin-bottom: 25px;
+      color: #555555;
+      line-height: 1.5;
+    }
+
+    /* Button */
+    #confirmButton {
+      background-color: #474745;
+      color: #ffffff;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #confirmButton:hover {
+      background-color: #333333;
+    }
+
+    /* Message Display */
+    #message {
+      font-size: 16px;
+      color: #e74c3c;
+      margin-top: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .confirm-wrapper {
+        padding: 20px;
+      }
+
+      .confirm-wrapper header img {
+        width: 100px;
+      }
+
+      #confirmButton {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="confirm-wrapper">
+  <header>
+    <img src="/images/mikasa-sports.png" alt="Mikasa Sports"/>
+  </header>
+  <div class="content">
+    <h1>Confirm Your Email</h1>
+    <p>Welcome! We're thrilled to have you join our community. Click the button below to activate your account and start exploring.</p>
+    <button id="confirmButton">Confirm Email</button>
+    <div id="message"></div>
+  </div>
+</div>
+
+<script>
+  const confirmButton = document.getElementById('confirmButton');
+  const messageDiv = document.getElementById('message');
+
+  confirmButton.addEventListener('click', async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    if (!token) {
+      messageDiv.textContent = "Invalid request: Token is missing.";
+      return;
+    }
+
+    try {
+      const response = await fetch('/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          query: `
+              mutation {
+                activateUser(token: "${token}") {
+                  id
+                  name
+                  email
+                }
+              }
+            `
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.errors) {
+        messageDiv.textContent = "Error: Unable to confirm your account. Please try again.";
+      } else {
+        messageDiv.textContent = "Success: Your account has been confirmed!";
+        confirmButton.style.display = 'none';
+      }
+    } catch (error) {
+      messageDiv.textContent = "An error occurred. Please try again later.";
+    }
+  });
+</script>
+</body>
+
+</html>

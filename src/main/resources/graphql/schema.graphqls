@@ -1,0 +1,49 @@
+type Query {
+    test: [String]
+}
+
+type Mutation {
+    registerUser (input: UserRegistrationRequestDto!) : UserResponse
+    activateUser (token: String!) : UserResponse
+    loginUser (input: AuthenticationRequestDto!) : AuthenticationResponseDto
+    refreshToken (input: RefreshTokenRequestDto!) : AuthenticationResponseDto
+}
+
+input UserRegistrationRequestDto {
+    name: String!
+    surname: String!
+    phone: String!
+    email: String!
+    password: String!
+}
+
+input AuthenticationRequestDto {
+    username: String!
+    password: String!
+}
+
+input RefreshTokenRequestDto {
+    refreshToken: String!
+}
+
+type AuthenticationResponseDto {
+    accessToken: String!
+    refreshToken: String!
+}
+
+type UserResponse {
+    id: ID!
+    name: String!
+    surname: String!
+    phone: String!
+    email: String!
+    role: Role!
+}
+
+enum Role {
+    BUYER
+    SELLER
+    COURIER_ADMIN
+    COURIER
+    SUPER_ADMIN
+}

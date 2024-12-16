@@ -1,0 +1,64 @@
+server:
+  servlet:
+    context-path: /
+  port: 8080
+
+spring:
+  graphql:
+    cors:
+      allowed-origins: "http://localhost:3000"
+      allowed-methods: GET,POST
+    path: /graphql
+    schema:
+      locations: classpath:graphql/
+    graphiql:
+      enabled: true
+
+  # Datasource Config
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/mikasa_api?currentSchema=mikasa_api
+    username: postgres
+    password: root
+
+  # flyway Config
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+    locations: classpath:db/migration
+
+  # JPA Config
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: asmaryan66@gmail.com
+    password: ascs qphk ybjd xsly
+    confirmEmailPath: http://localhost:8080
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connection timeout: 5000
+          timeout: 3000
+          write timeout: 5000
+
+permitted:
+  urls:
+    mutations:
+        - "/graphql"
+        - "/graphiql"
+        - "/images/*"
+        - "/verify-user.html"
+        - "/favicon.ico"
+        - "/confirm.html"
+jwt:
+  accessTokenValidity: 200000 #minutes
+  refreshTokenValidity: 262800 #minutes
+  secretKey: f5DEIpEacf9DGCEp1EWsDafYzQ68CZwa

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Verifying Account</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Styling */
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      height: 100vh;
+      background: linear-gradient(to right, #eceff1, #ffffff);
+      color: #333;
+    }
+
+    /* Error Section */
+    .error-container {
+      text-align: center;
+      max-width: 500px;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+    }
+
+    .error-image {
+      max-width: 150px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      color: #e74c3c;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #555555;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+<script>
+  const token = new URLSearchParams(window.location.search).get("token");
+
+  if (!token) {
+    document.body.innerHTML = `
+      <div class="error-container">
+        <img src="/images/mikasa-sports.png" alt="Error" class="error-image"/>
+        <h1>Invalid Request: Token is Missing</h1>
+        <p>It seems like the token required for this action is missing. Please contact support if this issue persists.</p>
+      </div>
+    `;
+  } else {
+    window.location.href = "/confirm.html?token=" + encodeURIComponent(token);
+  }
+</script>
+</body>
+</html>
